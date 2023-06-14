@@ -1,6 +1,11 @@
+radio.setGroup(3)
+radio.setFrequencyBand(7)
 let data = []
 let recentData = []
 let whiteLine = 0
+let btnA = false
+let btnB = false
+let btnLogo = false
 const pinC = DigitalPin.P15
 const pinL = DigitalPin.P14
 const pinR = DigitalPin.P13
@@ -27,7 +32,25 @@ basic.forever(function () {
         carMotor(0, 0, 0, -70)
     }
     else {
-        
-        carMotor(0, 0, -50, -50)
+        if (btnA == true) {
+            carMotor(0, 0, -50, 50)
+        }
+        if (btnB == true) {
+            carMotor(0, 0, 50, -50)
+        }
+        else {
+            carMotor(0, 0, -50, -50)
+        }
+    }
+})
+radio.onReceivedValue(function (name: string, value: number) {
+    if (name == "btnA") {
+        btnA = (value == 1)
+    }
+    if (name == "btnB") {
+        btnB = (value == 1)
+    }
+    if (name == "btnLogo") {
+        btnLogo = (value == 0)
     }
 })
